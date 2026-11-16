@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#050505">
+<title>HigStar | Orçamentos</title>
+<style>
+:root{color-scheme:light;--ink:#17232b;--muted:#66747c;--line:#e1e6e9;--green:#12df25;--blue:#0878c8}
+*{box-sizing:border-box}
+body{margin:0;background:#edf1f3;color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+.wrap{max-width:900px;margin:auto;padding:22px 15px 42px}
+.app-head{display:flex;align-items:center;gap:14px;background:#050505;color:#fff;padding:18px 20px;border-radius:14px}
+.brand-mark{width:64px;height:64px;border:2px solid #12df25;border-radius:12px;display:grid;place-items:center;font-size:25px;font-weight:900;letter-spacing:-2px;flex-shrink:0}
+.app-title{font-size:20px;font-weight:900;letter-spacing:2px}.app-sub{font-size:9px;letter-spacing:1.5px;color:#c7d0d5;margin-top:5px}
+.brand-line{height:4px;border-radius:5px;margin-top:10px;background:linear-gradient(90deg,#10e51e,#0878c8)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:21px;margin-top:18px;box-shadow:0 8px 25px #06131b0b}
+h1{font-size:19px;margin:0 0 6px}.eyebrow,.group-title{font-size:10px;font-weight:900;letter-spacing:1.4px;color:#138b50}
+.group-title{margin:22px 0 3px}label{display:block;font-size:12px;font-weight:700;color:#52616a;margin:13px 0 6px}
+input,select,textarea{width:100%;border:1px solid #d8e0e4;border-radius:9px;padding:12px 13px;background:#fff;color:#17232b;font:14px Arial;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#159b58;box-shadow:0 0 0 3px #12df251c}
+textarea{min-height:76px;resize:vertical;line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:14px 16px;font-weight:800;font-size:13px;cursor:pointer}
+.primary{width:100%;margin-top:19px;background:#050607;color:#fff}.secondary{width:100%;margin-top:10px;background:#edf3f4;color:#18252d}
+.hint{font-size:11px;color:#72818a;line-height:1.5;margin:7px 0 0}
+#preview{display:none;background:#fff;margin-top:20px;padding:30px;border:1px solid var(--line);border-radius:13px}
+.doc-head{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#050505;color:#fff;padding:13px 16px;border-radius:9px}
+.doc-brand{font-size:27px;font-weight:900;letter-spacing:2px}.doc-brand small{display:block;font-size:8px;letter-spacing:2px;color:#c7d0d5;margin-top:4px}
+.doc-head-right{text-align:right;font-size:10px;line-height:1.7;color:#e8edef}.doc-rule{height:4px;background:linear-gradient(90deg,#12df25,#0878c8);border-radius:4px;margin-top:8px}
+.doc-title{font-size:22px;font-weight:800;color:#101a20;margin:20px 0 5px}.doc-intro{font-size:10.5px;color:#65747c;line-height:1.55;margin:0}
+.doc-section{margin-top:15px;break-inside:avoid}.section-label{font-size:9px;font-weight:900;letter-spacing:1.45px;color:#138b50;margin-bottom:6px}
+.client-box,.service-box{border:1px solid #e4e9eb;border-radius:7px;padding:10px 12px;font-size:10.5px;line-height:1.55;color:#273942;white-space:pre-wrap}
+.client-box{background:#f7f9fa;border-left:3px solid #17232b}.service-box{background:#f5f8f8;border-left:3px solid #12b94a}
+.description{font-size:10px;line-height:1.55;color:#465760;white-space:pre-wrap}
+.gift-box{background:#effaf0;border:1px solid #d6efd9;border-left:3px solid #12c936;border-radius:7px;padding:9px 12px;font-size:10px;line-height:1.5;color:#245c32;white-space:pre-wrap}
+.notes-box{font-size:9.5px;line-height:1.5;color:#687780;white-space:pre-wrap}
+.investment{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:17px;padding:15px 18px;border-radius:9px;background:#050607;color:#fff;break-inside:avoid}
+.invest-label{font-size:9px;font-weight:900;letter-spacing:1.5px;color:#d5e0e4}.invest-note{font-size:9px;color:#aebbc1;margin-top:5px}.invest-value{font-size:26px;font-weight:900;white-space:nowrap}
+.doc-footer{border-top:1px solid #e3e8ea;padding-top:10px;margin-top:17px;color:#74818a;font-size:8.5px;line-height:1.5;display:flex;justify-content:space-between}
+[hidden]{display:none!important}
+@media(max-width:560px){.wrap{padding:14px 11px 30px}.panel{padding:16px}.grid{grid-template-columns:1fr;gap:0}#preview{padding:17px 14px}.investment{align-items:flex-start;flex-direction:column;gap:7px}.invest-value{font-size:24px}}
+@page{size:A4;margin:11mm}
+@media print{
+ html,body{margin:0!important;padding:0!important;background:#fff!important;color:#17232b!important;color-scheme:light!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ .wrap{max-width:none;margin:0;padding:0}.app-head,.brand-line,.panel,.no-print{display:none!important}
+ #preview{display:block!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important;color:#17232b!important}
+ .doc-head,.investment{background:#050505!important;color:#fff!important}
+ .doc-head{padding:10px 13px}.doc-title{font-size:20px;margin:16px 0 4px}.doc-section{margin-top:12px}
+ .service-box{padding:8px 10px}.investment{margin-top:14px;padding:12px 16px}.invest-value{font-size:24px}.doc-footer{margin-top:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="app-head"><div class="brand-mark">HS</div><div><div class="app-title">HIGSTAR</div><div class="app-sub">LIMPEZA E HIGIENIZAÇÃO PREMIUM</div></div></header>
+<div class="brand-line"></div>
+<section class="panel">
+<div class="eyebrow">GERADOR DE ORÇAMENTOS</div><h1>Novo orçamento</h1>
+<div class="grid">
+<div><label for="client">Nome do cliente *</label><input id="client" placeholder="Nome completo"></div>
+<div><label for="phone">Celular / WhatsApp</label><input id="phone" placeholder="(00) 00000-0000"></div>
+</div>
+<label for="address">Endereço do serviço (opcional)</label><input id="address" placeholder="Rua, número, bairro e cidade">
+<div class="group-title">SERVIÇO</div>
+<label for="service">Tipo de serviço</label>
+<select id="service">
+<option value="sofa">Higienização de sofá</option><option value="cadeiras">Higienização de cadeiras</option><option value="colchao">Higienização de colchão</option><option value="tapete">Higienização de tapete</option><option value="impermeabilizacao">Impermeabilização de estofado</option><option value="outro">Outro serviço</option>
+</select>
+<label for="items">Serviços e itens inclusos *</label><textarea id="items" placeholder="Ex.: Sofá de 3 lugares, chaise e almofadas"></textarea>
+<label for="description">Descrição do serviço *</label><textarea id="description"></textarea>
+<div class="grid">
+<div><label for="price">Valor total (R$) *</label><input id="price" inputmode="decimal" placeholder="0,00"></div>
+<div><label for="date">Data de emissão</label><input id="date" type="date"></div>
+</div>
+<div class="group-title">DETALHES OPCIONAIS</div>
+<label for="gifts">Cortesias</label><textarea id="gifts" placeholder="Informe brindes ou cortesias, se houver"></textarea>
+<label for="notes">Observações</label><textarea id="notes" placeholder="Informações adicionais"></textarea>
+<p class="hint">O orçamento terá validade de 7 dias a partir da emissão. A numeração é gerada automaticamente neste aparelho.</p>
+<button class="primary" id="generateBtn">GERAR ORÇAMENTO</button>
+<div id="actions" class="no-print" style="display:none"><button class="secondary" id="printBtn">SALVAR EM PDF / IMPRIMIR</button><button class="secondary" id="editBtn">EDITAR ORÇAMENTO</button></div>
+</section>
+<section id="preview">
+<div class="doc-head"><div class="doc-brand">HIGSTAR<small>LIMPEZA E HIGIENIZAÇÃO PREMIUM</small></div><div class="doc-head-right"><div id="pquote"></div><div id="pdate"></div><div id="pvalid"></div></div></div>
+<div class="doc-rule"></div>
+<div class="doc-title" id="pTitle">Orçamento de serviços</div>
+<p class="doc-intro">Apresentamos a seguir os serviços e condições propostos para atendimento.</p>
+<div class="doc-section" id="clientSection"><div class="section-label">DADOS DO CLIENTE</div><div class="client-box" id="pclient"></div></div>
+<div class="doc-section"><div class="section-label">SERVIÇOS E ITENS INCLUSOS</div><div class="service-box" id="pitems"></div></div>
+<div class="doc-section"><div class="section-label">DESCRIÇÃO TÉCNICA DO SERVIÇO</div><div class="description" id="pdesc"></div></div>
+<div class="doc-section" id="giftSection" hidden><div class="section-label">CORTESIAS</div><div class="gift-box" id="pgifts"></div></div>
+<div class="doc-section" id="notesSection" hidden><div class="section-label">OBSERVAÇÕES</div><div class="notes-box" id="pnotes"></div></div>
+<div class="investment"><div><div class="invest-label">INVESTIMENTO TOTAL</div><div class="invest-note">Condições de pagamento a combinar</div></div><div class="invest-value" id="pprice"></div></div>
+<div class="doc-footer"><strong>HIGSTAR</strong><span>Qualidade e cuidado em cada atendimento.</span></div>
+</section>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const templates={
+sofa:"Higienização profissional realizada com produtos selecionados conforme as características do tecido, com processo de limpeza e extração adequado ao estofado.",
+cadeiras:"Higienização profissional das cadeiras, com produtos selecionados conforme o revestimento e processo de limpeza adequado ao material.",
+colchao:"Higienização profissional do colchão, com aplicação controlada de produto e extração da sujidade, respeitando as características do material.",
+tapete:"Higienização do tapete com avaliação do material, seleção dos produtos compatíveis e processo de limpeza adequado às suas características.",
+impermeabilizacao:"Aplicação de produto impermeabilizante compatível com o revestimento, seguindo as etapas de preparação e aplicação recomendadas.",
+outro:"Serviço realizado conforme avaliação e características do material."
+};
+const serviceNames={sofa:"Higienização de sofá",cadeiras:"Higienização de cadeiras",colchao:"Higienização de colchão",tapete:"Higienização de tapete",impermeabilizacao:"Impermeabilização de estofado",outro:"Serviço especializado"};
+$("service").addEventListener("change",()=>{$("description").value=templates[$("service").value]});
+$("date").value=new Date().toISOString().slice(0,10);
+$("description").value=templates.sofa;
+function parseMoney(v){return Number(String(v).replace(/\./g,"").replace(",", "."))}
+function money(v){return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function dateBR(v){if(!v)return "";const [y,m,d]=v.split("-");return `${d}/${m}/${y}`}
+function nextQuote(){const n=Number(localStorage.getItem("higstar_quote_number")||0)+1;localStorage.setItem("higstar_quote_number",String(n));return "HS-"+String(n).padStart(4,"0")}
+function generate(){
+ const client=$("client").value.trim(),items=$("items").value.trim(),raw=$("price").value.trim(),desc=$("description").value.trim(),price=parseMoney(raw);
+ if(!client){alert("Informe o nome do cliente.");return}
+ if(!items){alert("Informe os serviços e itens inclusos.");return}
+ if(!raw||!Number.isFinite(price)||price<0){alert("Informe um valor válido para o orçamento.");return}
+ if(!desc){alert("Informe a descrição do serviço.");return}
+ const phone=$("phone").value.trim(),address=$("address").value.trim(),gifts=$("gifts").value.trim(),notes=$("notes").value.trim(),issued=$("date").value;
+ const valid=new Date(issued+"T12:00:00");valid.setDate(valid.getDate()+7);
+ $("pquote").textContent=nextQuote();
+ $("pdate").textContent="EMISSÃO: "+dateBR(issued);
+ $("pvalid").textContent="VALIDADE: "+valid.toLocaleDateString("pt-BR");
+ $("pTitle").textContent=serviceNames[$("service").value]||"Orçamento de serviços";
+ $("pclient").textContent=["Cliente: "+client,phone?"Celular: "+phone:"",address?"Local do serviço: "+address:""].filter(Boolean).join("\n");
+ $("clientSection").hidden=false;$("pitems").textContent=items;$("pdesc").textContent=desc;$("pprice").textContent=money(price);
+ $("pgifts").textContent=gifts;$("pnotes").textContent=notes;$("giftSection").hidden=!gifts;$("notesSection").hidden=!notes;
+ $("preview").style.display="block";$("actions").style.display="block";$("preview").scrollIntoView({behavior:"smooth",block:"start"});
+}
+$("generateBtn").addEventListener("click",generate);
+$("printBtn").addEventListener("click",()=>window.print());
+$("editBtn").addEventListener("click",()=>$("client").scrollIntoView({behavior:"smooth",block:"start"}));
+</script>
+</body></html>
