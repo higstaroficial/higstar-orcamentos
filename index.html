@@ -188,6 +188,51 @@ html {
   }
 }
 
+/* HIGSTAR - BLOQUEIO DO MODO ESCURO */
+
+:root,
+html,
+body {
+  color-scheme: only light !important;
+  background-color: #ffffff !important;
+}
+
+#preview,
+#preview * {
+  color-scheme: only light !important;
+  forced-color-adjust: none !important;
+}
+
+@media print {
+  :root,
+  html,
+  body {
+    color-scheme: only light !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #preview {
+    background-color: #ffffff !important;
+  }
+
+  #preview .doc-title,
+  #preview .doc-intro,
+  #preview .description,
+  #preview .client-box,
+  #preview .service-box,
+  #preview .notes-box {
+    background-color: #ffffff !important;
+  }
+
+  #preview .doc-head,
+  #preview .investment {
+    background-color: #050505 !important;
+    color: #ffffff !important;
+  }
+}
+
 </style>
 </head>
 <body>
