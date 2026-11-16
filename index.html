@@ -3,107 +3,934 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#142b3b">
-<title>HigStar | Orçamentos</title>
+<meta name="theme-color" content="#0f2537">
+<title>HigStar | Orçamentos 2.0</title>
 <style>
-:root{--navy:#142b3b;--teal:#1f7a78;--muted:#63727b;--line:#dce5e8;--bg:#f3f6f7}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial, sans-serif;color:var(--navy)}
-.wrap{max-width:760px;margin:0 auto;padding:22px 16px 40px}
-header{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--teal);padding:8px 2px 16px}
-.brand{font-size:27px;font-weight:800;letter-spacing:1px}.sub{font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:4px}
-.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px;box-shadow:0 5px 18px #142b3b0b}
-h1{font-size:20px;margin:0 0 16px}label{display:block;font-size:12px;font-weight:700;margin:14px 0 6px;color:var(--muted)}
-input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:9px;font:inherit;color:var(--navy);background:white}
-textarea{min-height:100px;resize:vertical;line-height:1.5}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-button{border:0;border-radius:10px;padding:14px 16px;font-weight:700;font-size:15px;cursor:pointer}
-.primary{background:var(--navy);color:white;width:100%;margin-top:20px}
-.secondary{background:#e9f1f1;color:var(--navy);width:100%;margin-top:10px}
-.hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
-#preview{display:none;background:white;margin-top:18px;padding:28px;border:1px solid var(--line);border-radius:12px}
-.dochead{display:flex;justify-content:space-between;gap:10px;border-bottom:2px solid var(--teal);padding-bottom:14px}
-.docbrand{font-size:26px;font-weight:800}.right{text-align:right;font-size:10px;color:var(--muted);line-height:1.6}
-.doc-title{font-size:19px;margin:28px 0 8px}.muted{color:var(--muted);font-size:13px;line-height:1.6}
-.section{font-size:11px;color:var(--teal);font-weight:800;letter-spacing:.6px;margin:22px 0 9px}
-.item{background:#f2f6f7;border:1px solid var(--line);padding:13px;border-radius:8px;margin:8px 0;font-size:13px;line-height:1.6}
-.price{background:var(--navy);color:white;padding:16px;border-radius:8px;margin-top:22px}
-.price small{display:block;font-weight:700;font-size:10px;letter-spacing:.6px}.price strong{display:block;font-size:25px;margin-top:5px}
-.footer{text-align:center;color:var(--muted);font-size:10px;margin-top:30px}
-@media(max-width:480px){.grid{grid-template-columns:1fr}.panel{padding:16px}#preview{padding:20px}.docbrand{font-size:22px}}
-@media print{
- @page{size:A4;margin:14mm}
- body{background:white}.wrap{max-width:none;padding:0}
- header,.panel,.no-print{display:none!important}
- #preview{display:block!important;border:0;border-radius:0;margin:0;padding:0}
- .item{break-inside:avoid}.price{break-inside:avoid}
+:root {
+  --navy: #0f2537;
+  --navy-light: #18364f;
+  --teal: #177874;
+  --teal-dark: #115c59;
+  --teal-soft: #eef6f6;
+  --text: #1c2d3a;
+  --muted: #5c6e7a;
+  --line: #d8e3e6;
+  --bg: #eff3f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 16px 48px;
+}
+
+/* Cabeçalho do Aplicativo */
+.app-header {
+  background: var(--navy);
+  color: #ffffff;
+  margin: 0 -16px 20px;
+  padding: 18px 20px;
+  border-bottom: 4px solid var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.monogram {
+  width: 38px;
+  height: 38px;
+  border: 2px solid var(--teal);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #ffffff;
+  background: rgba(23, 120, 116, 0.18);
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  line-height: 1;
+}
+
+.sub {
+  font-size: 10px;
+  color: #b7c9d1;
+  letter-spacing: 1.2px;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.badge-ver {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #e2eff2;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+/* Painel de Formulário */
+.panel {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: 0 6px 20px rgba(15, 37, 55, 0.06);
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 4px;
+}
+
+.panel-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 16px 0 6px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--navy);
+  margin: 16px 0 6px;
+}
+
+.label-row label {
+  margin: 0;
+}
+
+.reset-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--teal);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  background: #ffffff;
+  transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+}
+
+textarea {
+  min-height: 92px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+#description {
+  min-height: 115px;
+  font-size: 14px;
+}
+
+.field-tip {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 15px 18px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.2s;
+}
+
+.btn:active {
+  opacity: 0.88;
+}
+
+.primary {
+  background: var(--navy);
+  color: #ffffff;
+  margin-top: 22px;
+}
+
+.teal-btn {
+  background: var(--teal);
+  color: #ffffff;
+  margin-top: 14px;
+}
+
+.secondary {
+  background: #ffffff;
+  color: var(--navy);
+  border: 1.5px solid var(--line);
+  margin-top: 10px;
+}
+
+.ghost {
+  background: transparent;
+  color: var(--muted);
+  margin-top: 8px;
+  padding: 11px;
+  font-size: 13px;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+/* =========================================================
+   DOCUMENTO COMERCIAL / PRÉVIA A4 (VERSÃO 2.0)
+   ========================================================= */
+#preview {
+  display: none;
+  background: #ffffff;
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 37, 55, 0.1);
+}
+
+.doc-sheet {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+}
+
+/* Topo Institucional do PDF */
+.doc-banner {
+  background: var(--navy);
+  color: #ffffff;
+  padding: 26px 32px;
+  border-bottom: 5px solid var(--teal);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.doc-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.doc-monogram {
+  width: 48px;
+  height: 48px;
+  border: 2px solid var(--teal);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  background: rgba(23, 120, 116, 0.22);
+  flex-shrink: 0;
+}
+
+.doc-brand {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  line-height: 1;
+}
+
+.doc-tagline {
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  color: #bfd1d9;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.doc-meta {
+  text-align: right;
+  font-size: 11px;
+  line-height: 1.65;
+  color: #d6e4ea;
+}
+
+.doc-meta-tag {
+  display: inline-block;
+  background: var(--teal);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+/* Corpo do PDF */
+.doc-body {
+  padding: 26px 32px 20px;
+  flex: 1;
+}
+
+.doc-intro {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 14px;
+  margin-bottom: 20px;
+}
+
+.doc-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: 0.3px;
+  margin: 0 0 5px;
+}
+
+.doc-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.sec-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 10px;
+}
+
+.sec-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+}
+
+.service-pill {
+  background: var(--teal-soft);
+  color: var(--teal-dark);
+  border: 1px solid #c5e0df;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* Blocos de Serviços Inclusos */
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.service-block {
+  background: #f8fbfb;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--teal);
+  border-radius: 8px;
+  padding: 12px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+}
+
+/* Bloco de Descrição Técnica */
+.tech-box {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 20px;
+}
+
+.tech-text {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #344754;
+  margin: 0;
+  text-align: justify;
+}
+
+/* Barra de Padrão de Qualidade */
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pillar-card {
+  background: #f5f8fa;
+  border: 1px solid #e3ecef;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.pillar-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 2px;
+}
+
+.pillar-desc {
+  font-size: 10.5px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+/* Área Inferior (Cortesias + Investimento + Rodapé) */
+.doc-bottom {
+  padding: 0 32px 24px;
+}
+
+.courtesy-box {
+  display: none;
+  background: var(--teal-soft);
+  border: 1px solid #bfe0de;
+  border-left: 4px solid var(--teal);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.courtesy-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--teal-dark);
+  margin-bottom: 4px;
+}
+
+.courtesy-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+}
+
+/* Bloco de Destaque do Investimento */
+.price-box {
+  background: var(--navy);
+  color: #ffffff;
+  border-radius: 10px;
+  border-left: 6px solid var(--teal);
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.price-info small {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #8fd3d0;
+  text-transform: uppercase;
+}
+
+.price-info span {
+  display: block;
+  font-size: 11.5px;
+  color: #c4d5dd;
+  margin-top: 4px;
+}
+
+.price-value {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Rodapé Institucional */
+.doc-footer {
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10.5px;
+  color: var(--muted);
+}
+
+.doc-footer strong {
+  color: var(--navy);
+  letter-spacing: 1px;
+}
+
+/* Ajustes para Tela de Celular */
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .doc-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+  }
+  .doc-meta {
+    text-align: left;
+  }
+  .doc-body {
+    padding: 20px;
+  }
+  .doc-bottom {
+    padding: 0 20px 20px;
+  }
+  .pillars {
+    grid-template-columns: 1fr;
+  }
+  .price-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .price-value {
+    font-size: 27px;
+  }
+  .doc-footer {
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   REGRAS DE IMPRESSÃO - PÁGINA A4 ÚNICA E EQUILIBRADA
+   ========================================================= */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    background: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .wrap {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .app-header,
+  .panel,
+  .no-print {
+    display: none !important;
+  }
+
+  #preview {
+    display: block !important;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    width: 210mm;
+    height: 296mm;
+    overflow: hidden;
+  }
+
+  .doc-sheet {
+    height: 296mm;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .doc-banner {
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 11mm 15mm;
+  }
+
+  .doc-meta {
+    text-align: right !important;
+  }
+
+  .doc-body {
+    padding: 9mm 15mm 4mm;
+    flex: 1;
+  }
+
+  .pillars {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  .doc-bottom {
+    padding: 0 15mm 11mm;
+  }
+
+  .price-box {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .doc-footer {
+    flex-direction: row !important;
+    text-align: left !important;
+  }
+
+  .service-block,
+  .tech-box,
+  .courtesy-box,
+  .price-box {
+    break-inside: avoid;
+  }
 }
 </style>
 </head>
 <body>
+
 <div class="wrap">
-<header><div><div class="brand">HIGSTAR</div><div class="sub">HIGIENIZAÇÃO PROFISSIONAL DE ESTOFADOS</div></div><div class="sub">ORÇAMENTOS</div></header>
-<section class="panel">
-<h1>Novo orçamento</h1>
-<label for="service">Serviço</label>
-<select id="service">
-<option value="sofa">Higienização de sofá</option><option value="cadeiras">Higienização de cadeiras</option>
-<option value="colchao">Higienização de colchão</option><option value="tapete">Higienização de tapete</option>
-<option value="impermeabilizacao">Impermeabilização</option><option value="outro">Outro serviço</option>
-</select>
-<label for="items">Itens e detalhes do serviço</label>
-<textarea id="items" placeholder="Ex.: 1 sofá de 2 módulos e 4 cadeiras de cortesia"></textarea>
-<label for="description">Descrição técnica (pode editar)</label>
-<textarea id="description">O serviço contempla a higienização profissional das superfícies dos estofados, com aplicação de produtos específicos para esse tipo de material e utilização de equipamentos adequados para auxiliar na remoção de sujeiras e resíduos acumulados. O procedimento é realizado de acordo com as características dos tecidos, buscando melhorar as condições de limpeza, higiene e aparência das peças.</textarea>
-<div class="grid">
-<div><label for="price">Valor total (R$)</label><input id="price" inputmode="decimal" placeholder="280,00"></div>
-<div><label for="date">Data</label><input id="date" type="date"></div>
+  <header class="app-header">
+    <div class="app-brand-group">
+      <div class="monogram">HS</div>
+      <div>
+        <div class="brand">HIGSTAR</div>
+        <div class="sub">Higienização Profissional de Estofados</div>
+      </div>
+    </div>
+    <div class="badge-ver">ORÇAMENTOS 2.0</div>
+  </header>
+
+  <section class="panel" id="form-panel">
+    <h1 class="panel-title">Novo orçamento</h1>
+    <p class="panel-desc">Preencha os dados essenciais para gerar a proposta comercial em PDF.</p>
+
+    <label for="service">Tipo de serviço</label>
+    <select id="service">
+      <option value="sofa">Higienização de sofá</option>
+      <option value="cadeiras">Higienização de cadeiras</option>
+      <option value="colchao">Higienização de colchão</option>
+      <option value="tapete">Higienização de tapetes</option>
+      <option value="impermeabilizacao">Impermeabilização</option>
+      <option value="outro">Outro serviço</option>
+    </select>
+
+    <label for="items">Itens e detalhes do serviço</label>
+    <textarea id="items" placeholder="Ex.: 1 sofá retrátil de 3 lugares em linho&#10;1 poltrona decorativa"></textarea>
+    <div class="field-tip">Dica: coloque cada item em uma linha para formar blocos organizados no PDF.</div>
+
+    <div class="label-row">
+      <label for="description">Descrição técnica (editável)</label>
+      <button type="button" class="reset-link" onclick="resetDescription()">Restaurar padrão</button>
+    </div>
+    <textarea id="description"></textarea>
+
+    <div class="grid">
+      <div>
+        <label for="price">Investimento total (R$)</label>
+        <input id="price" inputmode="decimal" placeholder="280,00">
+      </div>
+      <div>
+        <label for="date">Data de emissão</label>
+        <input id="date" type="date">
+      </div>
+    </div>
+
+    <label for="notes">Cortesias ou observações especiais (opcional)</label>
+    <input id="notes" placeholder="Ex.: Higienização de 2 almofadas decorativas inclusa como cortesia">
+
+    <button type="button" class="btn primary" onclick="generate()">Gerar proposta comercial</button>
+    <p class="hint">Geração gratuita pelo próprio navegador. Na tela seguinte, toque em Salvar / Compartilhar PDF.</p>
+  </section>
+
+  <!-- DOCUMENTO DE PROPOSTA COMERCIAL (PDF A4) -->
+  <section id="preview">
+    <div class="doc-sheet">
+      <div>
+        <div class="doc-banner">
+          <div class="doc-brand-wrap">
+            <div class="doc-monogram">HS</div>
+            <div>
+              <div class="doc-brand">HIGSTAR</div>
+              <div class="doc-tagline">Higienização e Impermeabilização de Estofados</div>
+            </div>
+          </div>
+          <div class="doc-meta">
+            <div class="doc-meta-tag">PROPOSTA COMERCIAL</div><br>
+            <span id="pref"></span><br>
+            <span id="pdate"></span><br>
+            <span>VALIDADE: 7 DIAS</span>
+          </div>
+        </div>
+
+        <div class="doc-body">
+          <div class="doc-intro">
+            <div class="doc-title">Orçamento de Prestação de Serviços</div>
+            <p class="doc-subtitle">Apresentamos nossa proposta técnica e comercial elaborada para a revitalização, proteção e conservação dos seus estofados.</p>
+          </div>
+
+          <div class="sec-header">
+            <span class="sec-label">Escopo dos Serviços</span>
+            <span class="service-pill" id="pservice-badge"></span>
+          </div>
+          <div class="items-list" id="pitems"></div>
+
+          <div class="sec-header">
+            <span class="sec-label">Metodologia e Descrição Técnica</span>
+          </div>
+          <div class="tech-box">
+            <p class="tech-text" id="pdesc"></p>
+          </div>
+
+          <div class="pillars">
+            <div class="pillar-card">
+              <div class="pillar-title">Produtos Especializados</div>
+              <div class="pillar-desc">Formulações seguras e adequadas a cada tipo de fibra e revestimento.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-title">Equipamentos Profissionais</div>
+              <div class="pillar-desc">Alta capacidade de extração para resultado superior e secagem eficiente.</div>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-title">Execução Criteriosa</div>
+              <div class="pillar-desc">Cuidado técnico completo preservando a cor, a maciez e a estrutura original.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="doc-bottom">
+        <div class="courtesy-box" id="pnotes-box">
+          <div class="courtesy-tag">Cortesia / Observação Especial</div>
+          <div class="courtesy-text" id="pnotes"></div>
+        </div>
+
+        <div class="price-box">
+          <div class="price-info">
+            <small>Investimento Total</small>
+            <span>Valor referente à execução completa dos serviços descritos nesta proposta.</span>
+          </div>
+          <div class="price-value" id="pprice"></div>
+        </div>
+
+        <div class="doc-footer">
+          <div><strong>HIGSTAR</strong> &bull; Cuidado profissional e especializado para seus estofados</div>
+          <div>Proposta digital &bull; Atendimento personalizado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTÕES DE AÇÃO PÓS-GERAÇÃO -->
+  <div class="no-print" id="print-actions" style="display:none">
+    <button type="button" class="btn teal-btn" onclick="window.print()">Salvar / Compartilhar PDF</button>
+    <button type="button" class="btn secondary" id="copy-wa-btn" onclick="copyWhatsAppText()">Copiar mensagem para WhatsApp</button>
+    <button type="button" class="btn ghost" onclick="editForm()">Voltar e editar dados</button>
+  </div>
 </div>
-<label for="notes">Observações / cortesias (opcional)</label>
-<input id="notes" placeholder="Ex.: 4 cadeiras incluídas como cortesia">
-<button class="primary" onclick="generate()">GERAR ORÇAMENTO</button>
-<p class="hint">O PDF será criado pela opção Imprimir do navegador. Escolha “Salvar como PDF”. Não há cobrança por orçamento.</p>
-</section>
-<section id="preview">
-<div class="dochead"><div><div class="docbrand">HIGSTAR</div><div class="sub">HIGIENIZAÇÃO PROFISSIONAL DE ESTOFADOS</div></div><div class="right"><b>PROPOSTA COMERCIAL</b><br><span id="pdate"></span></div></div>
-<div class="doc-title">Orçamento de serviço</div>
-<div class="muted">Apresentamos a proposta para execução dos serviços descritos abaixo.</div>
-<div class="section">SERVIÇOS INCLUSOS</div><div class="item" id="pitems"></div>
-<div class="section">DESCRIÇÃO TÉCNICA</div><div class="muted" id="pdesc"></div>
-<div class="price"><small>INVESTIMENTO TOTAL</small><strong id="pprice"></strong></div>
-<div id="pnotes" class="muted" style="margin-top:16px"></div>
-<div class="footer"><b>HIGSTAR</b> | Cuidado profissional para seus estofados</div>
-</section>
-<div class="no-print" id="print-actions" style="display:none">
-<button class="primary" onclick="window.print()">BAIXAR / SALVAR EM PDF</button>
-<button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">EDITAR ORÇAMENTO</button>
-</div>
-</div>
+
 <script>
-const today=new Date(); const local=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
-document.getElementById('date').value=local;
-const templates={
- sofa:"Higienização profissional de estofados, com aplicação de produtos específicos e equipamentos adequados para auxiliar na remoção de sujeiras e resíduos, respeitando as características do tecido.",
- cadeiras:"Higienização profissional das cadeiras, com produtos específicos para estofados e processo adequado às características do revestimento.",
- colchao:"Higienização profissional do colchão, com processo e produtos adequados ao revestimento, auxiliando na remoção de sujeiras e resíduos acumulados.",
- tapete:"Higienização profissional do tapete, com procedimento adequado às características da peça e aplicação de produtos específicos para sua limpeza.",
- impermeabilizacao:"Aplicação profissional de produto impermeabilizante adequado ao revestimento, conforme as características do material e orientações técnicas do fabricante.",
- outro:"Execução do serviço descrito nesta proposta, utilizando produtos, técnicas e equipamentos adequados às características do material."
+const today = new Date();
+const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+document.getElementById('date').value = localDate;
+
+const serviceLabels = {
+  sofa: "Higienização de Sofá",
+  cadeiras: "Higienização de Cadeiras",
+  colchao: "Higienização de Colchão",
+  tapete: "Higienização de Tapetes",
+  impermeabilizacao: "Impermeabilização",
+  outro: "Serviço Especializado"
 };
-document.getElementById('service').addEventListener('change',e=>{document.getElementById('description').value=templates[e.target.value]});
-function brDate(v){if(!v)return '';let [y,m,d]=v.split('-');return d+'/'+m+'/'+y}
-function money(v){let n=Number(v.replace(/\./g,'').replace(',','.'));return Number.isFinite(n)?n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'R$ '+v}
-function generate(){
- const items=document.getElementById('items').value.trim(), price=document.getElementById('price').value.trim();
- if(!items||!price){alert('Preencha os itens do serviço e o valor.');return}
- document.getElementById('pdate').textContent='EMISSÃO: '+brDate(document.getElementById('date').value);
- document.getElementById('pitems').textContent=items;
- document.getElementById('pdesc').textContent=document.getElementById('description').value.trim();
- document.getElementById('pprice').textContent=money(price);
- const notes=document.getElementById('notes').value.trim();
- document.getElementById('pnotes').textContent=notes?notes:'';
- document.getElementById('preview').style.display='block';
- document.getElementById('print-actions').style.display='block';
- document.getElementById('preview').scrollIntoView({behavior:'smooth'});
+
+const templates = {
+  sofa: "Higienização técnica profunda do estofado realizada em etapas: aspiração de alta potência para remoção de partículas sólidas, pulverização de agentes sanitizantes específicos para a fibra do tecido, esfregação controlada com escovação macia e extração por sucção profunda para remoção de sujidades, ácaros, fungos, bactérias e odores. Procedimento seguro que preserva a integridade, a cor e o toque original do revestimento.",
+  cadeiras: "Higienização técnica detalhada dos assentos e encostos, com aplicação de soluções específicas para estofados, ação mecânica controlada e extração profunda de sujidades e resíduos orgânicos. Processo desenvolvido para revitalizar a aparência, eliminar microrganismos e preservar a durabilidade e o acabamento original das peças.",
+  colchao: "Higienização e sanitização profunda do colchão, com extração de alta potência e aplicação de produtos específicos de ação antimicrobiana e antiácaro. O procedimento auxilia na remoção de suor, sujidades impregnadas, ácaros e odores, promovendo um ambiente mais saudável e higiênico sem comprometer a estrutura interna ou o tecido.",
+  tapete: "Higienização profissional do tapete conforme a composição e a sensibilidade das fibras. Inclui aspiração profunda, aplicação de produtos específicos para remoção de sujidades encrustadas, revitalização das cores e extração controlada, garantindo limpeza eficaz e preservação da trama original.",
+  impermeabilizacao: "Aplicação profissional de impermeabilizante técnico de alta performance, formando uma barreira protetora invisível ao redor das fibras do tecido contra a penetração de líquidos e manchas acidentais. O tratamento mantém a respirabilidade, a maciez e a cor original do estofado, facilitando a limpeza diária e prolongando sua vida útil.",
+  outro: "Execução técnica especializada conforme os itens especificados nesta proposta, utilizando equipamentos profissionais e produtos adequados às características do material para assegurar máxima qualidade, segurança e acabamento superior."
+};
+
+const serviceSelect = document.getElementById('service');
+const descriptionField = document.getElementById('description');
+
+// Carrega descrição correspondente ao serviço inicial
+descriptionField.value = templates[serviceSelect.value];
+
+serviceSelect.addEventListener('change', function(e) {
+  descriptionField.value = templates[e.target.value];
+});
+
+function resetDescription() {
+  descriptionField.value = templates[serviceSelect.value];
+}
+
+function brDate(v) {
+  if (!v) return '';
+  const [y, m, d] = v.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function money(v) {
+  const clean = v.replace(/[^\d.,]/g, '');
+  const normalized = clean.includes(',')
+    ? clean.replace(/\./g, '').replace(',', '.')
+    : clean;
+  const n = Number(normalized);
+  return Number.isFinite(n) && n > 0
+    ? n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    : 'R$ ' + v;
+}
+
+function generate() {
+  const itemsRaw = document.getElementById('items').value.trim();
+  const priceRaw = document.getElementById('price').value.trim();
+
+  if (!itemsRaw || !priceRaw) {
+    alert('Preencha os itens do serviço e o valor do investimento.');
+    return;
+  }
+
+  const dateVal = document.getElementById('date').value;
+  const serviceKey = serviceSelect.value;
+  const formattedPrice = money(priceRaw);
+  const notesRaw = document.getElementById('notes').value.trim();
+
+  // Referência automática baseada na data
+  const refCode = dateVal ? 'REF. ' + dateVal.replace(/-/g, '') : 'PROPOSTA DIGITAL';
+  document.getElementById('pref').textContent = refCode;
+  document.getElementById('pdate').textContent = 'EMISSÃO: ' + brDate(dateVal);
+  document.getElementById('pservice-badge').textContent = serviceLabels[serviceKey];
+
+  // Divide itens por quebra de linha em blocos organizados
+  const itemsContainer = document.getElementById('pitems');
+  itemsContainer.innerHTML = '';
+  const lines = itemsRaw.split(/\n+/).map(l => l.trim()).filter(Boolean);
+  lines.forEach(line => {
+    const div = document.createElement('div');
+    div.className = 'service-block';
+    div.textContent = line;
+    itemsContainer.appendChild(div);
+  });
+
+  document.getElementById('pdesc').textContent = descriptionField.value.trim();
+  document.getElementById('pprice').textContent = formattedPrice;
+
+  // Bloco condicional de cortesia/observações
+  const notesBox = document.getElementById('pnotes-box');
+  if (notesRaw) {
+    document.getElementById('pnotes').textContent = notesRaw;
+    notesBox.style.display = 'block';
+  } else {
+    notesBox.style.display = 'none';
+  }
+
+  document.getElementById('preview').style.display = 'block';
+  document.getElementById('print-actions').style.display = 'block';
+  document.getElementById('preview').scrollIntoView({ behavior: 'smooth' });
+}
+
+function copyWhatsAppText() {
+  const serviceName = serviceLabels[serviceSelect.value];
+  const items = document.getElementById('items').value.trim();
+  const price = document.getElementById('pprice').textContent;
+  const notes = document.getElementById('notes').value.trim();
+
+  let msg = `*HIGSTAR - Proposta Comercial*\n\n`;
+  msg += `*Serviço:* ${serviceName}\n`;
+  msg += `*Itens:* ${items.replace(/\n+/g, ' | ')}\n`;
+  if (notes) {
+    msg += `*Observação / Cortesia:* ${notes}\n`;
+  }
+  msg += `*Investimento Total:* ${price}\n\n`;
+  msg += `Segue em anexo o orçamento detalhado em PDF. Qualquer dúvida, estou à disposição.`;
+
+  navigator.clipboard.writeText(msg).then(() => {
+    const btn = document.getElementById('copy-wa-btn');
+    const original = btn.textContent;
+    btn.textContent = 'Mensagem copiada!';
+    setTimeout(() => { btn.textContent = original; }, 2500);
+  });
+}
+
+function editForm() {
+  document.getElementById('form-panel').scrollIntoView({ behavior: 'smooth' });
 }
 </script>
 </body>
