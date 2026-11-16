@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#142b3b">
+<title>HigStar | Orçamentos</title>
+<style>
+:root{--navy:#142b3b;--teal:#1f7a78;--muted:#63727b;--line:#dce5e8;--bg:#f3f6f7}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial, sans-serif;color:var(--navy)}
+.wrap{max-width:760px;margin:0 auto;padding:22px 16px 40px}
+header{display:flex;align-items:center;justify-content:space-between;border-bottom:3px solid var(--teal);padding:8px 2px 16px}
+.brand{font-size:27px;font-weight:800;letter-spacing:1px}.sub{font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:4px}
+.panel{background:white;border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:18px;box-shadow:0 5px 18px #142b3b0b}
+h1{font-size:20px;margin:0 0 16px}label{display:block;font-size:12px;font-weight:700;margin:14px 0 6px;color:var(--muted)}
+input,select,textarea{width:100%;padding:13px;border:1px solid var(--line);border-radius:9px;font:inherit;color:var(--navy);background:white}
+textarea{min-height:100px;resize:vertical;line-height:1.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{border:0;border-radius:10px;padding:14px 16px;font-weight:700;font-size:15px;cursor:pointer}
+.primary{background:var(--navy);color:white;width:100%;margin-top:20px}
+.secondary{background:#e9f1f1;color:var(--navy);width:100%;margin-top:10px}
+.hint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:10px}
+#preview{display:none;background:white;margin-top:18px;padding:28px;border:1px solid var(--line);border-radius:12px}
+.dochead{display:flex;justify-content:space-between;gap:10px;border-bottom:2px solid var(--teal);padding-bottom:14px}
+.docbrand{font-size:26px;font-weight:800}.right{text-align:right;font-size:10px;color:var(--muted);line-height:1.6}
+.doc-title{font-size:19px;margin:28px 0 8px}.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.section{font-size:11px;color:var(--teal);font-weight:800;letter-spacing:.6px;margin:22px 0 9px}
+.item{background:#f2f6f7;border:1px solid var(--line);padding:13px;border-radius:8px;margin:8px 0;font-size:13px;line-height:1.6}
+.price{background:var(--navy);color:white;padding:16px;border-radius:8px;margin-top:22px}
+.price small{display:block;font-weight:700;font-size:10px;letter-spacing:.6px}.price strong{display:block;font-size:25px;margin-top:5px}
+.footer{text-align:center;color:var(--muted);font-size:10px;margin-top:30px}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.panel{padding:16px}#preview{padding:20px}.docbrand{font-size:22px}}
+@media print{
+ @page{size:A4;margin:14mm}
+ body{background:white}.wrap{max-width:none;padding:0}
+ header,.panel,.no-print{display:none!important}
+ #preview{display:block!important;border:0;border-radius:0;margin:0;padding:0}
+ .item{break-inside:avoid}.price{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div><div class="brand">HIGSTAR</div><div class="sub">HIGIENIZAÇÃO PROFISSIONAL DE ESTOFADOS</div></div><div class="sub">ORÇAMENTOS</div></header>
+<section class="panel">
+<h1>Novo orçamento</h1>
+<label for="service">Serviço</label>
+<select id="service">
+<option value="sofa">Higienização de sofá</option><option value="cadeiras">Higienização de cadeiras</option>
+<option value="colchao">Higienização de colchão</option><option value="tapete">Higienização de tapete</option>
+<option value="impermeabilizacao">Impermeabilização</option><option value="outro">Outro serviço</option>
+</select>
+<label for="items">Itens e detalhes do serviço</label>
+<textarea id="items" placeholder="Ex.: 1 sofá de 2 módulos e 4 cadeiras de cortesia"></textarea>
+<label for="description">Descrição técnica (pode editar)</label>
+<textarea id="description">O serviço contempla a higienização profissional das superfícies dos estofados, com aplicação de produtos específicos para esse tipo de material e utilização de equipamentos adequados para auxiliar na remoção de sujeiras e resíduos acumulados. O procedimento é realizado de acordo com as características dos tecidos, buscando melhorar as condições de limpeza, higiene e aparência das peças.</textarea>
+<div class="grid">
+<div><label for="price">Valor total (R$)</label><input id="price" inputmode="decimal" placeholder="280,00"></div>
+<div><label for="date">Data</label><input id="date" type="date"></div>
+</div>
+<label for="notes">Observações / cortesias (opcional)</label>
+<input id="notes" placeholder="Ex.: 4 cadeiras incluídas como cortesia">
+<button class="primary" onclick="generate()">GERAR ORÇAMENTO</button>
+<p class="hint">O PDF será criado pela opção Imprimir do navegador. Escolha “Salvar como PDF”. Não há cobrança por orçamento.</p>
+</section>
+<section id="preview">
+<div class="dochead"><div><div class="docbrand">HIGSTAR</div><div class="sub">HIGIENIZAÇÃO PROFISSIONAL DE ESTOFADOS</div></div><div class="right"><b>PROPOSTA COMERCIAL</b><br><span id="pdate"></span></div></div>
+<div class="doc-title">Orçamento de serviço</div>
+<div class="muted">Apresentamos a proposta para execução dos serviços descritos abaixo.</div>
+<div class="section">SERVIÇOS INCLUSOS</div><div class="item" id="pitems"></div>
+<div class="section">DESCRIÇÃO TÉCNICA</div><div class="muted" id="pdesc"></div>
+<div class="price"><small>INVESTIMENTO TOTAL</small><strong id="pprice"></strong></div>
+<div id="pnotes" class="muted" style="margin-top:16px"></div>
+<div class="footer"><b>HIGSTAR</b> | Cuidado profissional para seus estofados</div>
+</section>
+<div class="no-print" id="print-actions" style="display:none">
+<button class="primary" onclick="window.print()">BAIXAR / SALVAR EM PDF</button>
+<button class="secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})">EDITAR ORÇAMENTO</button>
+</div>
+</div>
+<script>
+const today=new Date(); const local=new Date(today.getTime()-today.getTimezoneOffset()*60000).toISOString().slice(0,10);
+document.getElementById('date').value=local;
+const templates={
+ sofa:"Higienização profissional de estofados, com aplicação de produtos específicos e equipamentos adequados para auxiliar na remoção de sujeiras e resíduos, respeitando as características do tecido.",
+ cadeiras:"Higienização profissional das cadeiras, com produtos específicos para estofados e processo adequado às características do revestimento.",
+ colchao:"Higienização profissional do colchão, com processo e produtos adequados ao revestimento, auxiliando na remoção de sujeiras e resíduos acumulados.",
+ tapete:"Higienização profissional do tapete, com procedimento adequado às características da peça e aplicação de produtos específicos para sua limpeza.",
+ impermeabilizacao:"Aplicação profissional de produto impermeabilizante adequado ao revestimento, conforme as características do material e orientações técnicas do fabricante.",
+ outro:"Execução do serviço descrito nesta proposta, utilizando produtos, técnicas e equipamentos adequados às características do material."
+};
+document.getElementById('service').addEventListener('change',e=>{document.getElementById('description').value=templates[e.target.value]});
+function brDate(v){if(!v)return '';let [y,m,d]=v.split('-');return d+'/'+m+'/'+y}
+function money(v){let n=Number(v.replace(/\./g,'').replace(',','.'));return Number.isFinite(n)?n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}):'R$ '+v}
+function generate(){
+ const items=document.getElementById('items').value.trim(), price=document.getElementById('price').value.trim();
+ if(!items||!price){alert('Preencha os itens do serviço e o valor.');return}
+ document.getElementById('pdate').textContent='EMISSÃO: '+brDate(document.getElementById('date').value);
+ document.getElementById('pitems').textContent=items;
+ document.getElementById('pdesc').textContent=document.getElementById('description').value.trim();
+ document.getElementById('pprice').textContent=money(price);
+ const notes=document.getElementById('notes').value.trim();
+ document.getElementById('pnotes').textContent=notes?notes:'';
+ document.getElementById('preview').style.display='block';
+ document.getElementById('print-actions').style.display='block';
+ document.getElementById('preview').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>
